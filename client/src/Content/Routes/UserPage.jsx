@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import path from 'path';
 
 class UserPage extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class UserPage extends Component {
     this.updateUserInfo = this.updateUserInfo.bind(this);
   }
   componentWillMount() {
-    console.log(this.props.currentUser.uid)
+    console.log(this.props.currentUser)
     axios.get('/users/update/' + this.props.currentUser.uid)
       .then((res) => {
         this.setState({
@@ -57,8 +58,18 @@ class UserPage extends Component {
   }
 
   render() {
+    let profilePic = '';
+    if (this.props.currentUser.photoURL) {
+      profilePic = this.props.currentUser.photoURL;
+    } else {
+      profilePic = (path.resolve(__dirname, '/client/public/logo.png'))
+    }
     return (
       <div id="userPage">
+        <img id="profPic" src={profilePic} />
+        <div>Username: {this.state.firstname} {this.state.lastname}</div>
+        <div>Dog: {this.state.dogname}</div>
+        <div>Dog Bio: {this.state.dogbio}</div>
         <Link to="userprofile"><i>Edit Profile</i></Link>
       </div>
     )

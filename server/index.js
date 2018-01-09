@@ -11,7 +11,9 @@ const app = express();
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../client/public')));
-
+app.get('/client/public/logo.png', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/public/logo.png'))
+})
 // serves up the index.html on any page refreshes to the react routes.
 app.get('/userprofile', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/public/index.html'))
